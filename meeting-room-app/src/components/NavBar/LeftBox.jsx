@@ -4,32 +4,34 @@ const LeftBox = () => {
     return (
         <div className="leftbox">
             <nav>
+                {/* history */}
                 <LeftBoxItem
                     id="dashboard"
-                    icon="history"
+                    icon="circle"
                 />
 
+                {/* user */}
                 <LeftBoxItem
                     id="profile"
-                    icon="user"
+                    icon="circle"
                 />
 
+                {/* align-justify */}
                 <LeftBoxItem
                     id="settings"
-                    icon="align-justify"
-                    show={ true }
+                    icon="circle"
                 />
 
+                {/* comments */}
                 <LeftBoxItem
                     id="messages"
-                    icon="comments"
-                    show={ true }
+                    icon="circle"
                 />
 
+                {/* notification */}
                 <LeftBoxItem
                     id="notification"
-                    icon="bell"
-                    show={ true }
+                    icon="circle"
                 />
             </nav>
         </div>

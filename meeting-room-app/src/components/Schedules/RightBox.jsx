@@ -1,10 +1,10 @@
 import RightBoxList from "./RightBoxList.jsx";
 
-const RightBox = () => {
+const RightBox = ({ schedules }) => {
     return (
         <div className="rightbox">
             <div className="rb-container montse">
-                <RightBoxList />
+                <RightBoxList schedules={ schedules } />
             </div>
         </div>
     );

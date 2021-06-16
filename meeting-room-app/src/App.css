@@ -25,10 +25,6 @@
 	transform: translateY(2px);
   }
 
-.not {
-	cursor: not-allowed;
-}
-
 #logo {
 	width: 100px;
 	height: 100px;
@@ -68,7 +64,7 @@ nav a {
 	font-size: 1.1em;
 	display: block;
 	transition: all 0.5s ease-in-out;
-	cursor: pointer;
+	cursor: context-menu;
 }
 
 .rightbox {
@@ -77,12 +73,17 @@ nav a {
 	width: 200px;
 	top: -0.5%;
 	position: absolute;
+	overflow: auto;
 }
 
 .rb-container {
 	width: 100%;
 	display: block;
 	position: relative;
+}
+
+::-webkit-scrollbar { 
+	display: none; 
 }
 
 .rb-container ul.rb {

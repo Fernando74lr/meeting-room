@@ -1,34 +1,47 @@
 import RightBoxListItem from './RightBoxListItem';
+import { useState, useEffect } from 'react';
 
-const RightBoxList = () => {
+const RightBoxList = ({ schedules }) => {
+
+    const [schedulesState, setstate] = useState(schedules);
+
+    useEffect( () => {
+        setstate(schedules);
+    }, [schedules]);
+
+    const getMonth = (month) => {
+        switch (month) {
+            case '01': return 'Enero';
+            case '02': return 'Febrero';
+            case '03': return 'Marzo';
+            case '04': return 'Abril';
+            case '05': return 'Mayo';
+            case '06': return 'Junio';
+            case '07': return 'Julio';
+            case '08': return 'Agosto';
+            case '09': return 'Septiembre';
+            case '10': return 'Octubre';
+            case '11': return 'Noviembre';
+            case '12': return 'Diciembre';
+            default: return 'Undefined'
+        }
+    }
+
     return (
         <ul className="rb">
-            <RightBoxListItem
-                date="3"
-                month="Mayo"
-                year="2020"
-                initial_time="7:00"
-                final_time="15:15"
-                title="Chris Serrano posted a photo on your wall."
-            />
-
-            <RightBoxListItem
-                date="13"
-                month="Mayo"
-                year="2020"
-                initial_time="7:00"
-                final_time="15:15"
-                title="Mia Redwood commented on your last post."
-            />
-
-            <RightBoxListItem
-                date="17"
-                month="Junio"
-                year="2020"
-                initial_time="7:00"
-                final_time="15:15"
-                title="Lucas McAlister just send you a message."
-            />
+            {
+                schedulesState.map((sch, i) => (
+                    <RightBoxListItem
+                        key={ i }
+                        date={ sch.date.split('-')[2] }
+                        month={ getMonth(sch.date.split('-')[1]) }
+                        year={ sch.date.split('-')[0] }
+                        initial_time= { sch.initialTime }
+                        final_time={ sch.finalTime }
+                        title={ sch.title }
+                    />
+                ))
+            }
         </ul>
     );
 }
