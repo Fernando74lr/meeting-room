@@ -7,19 +7,17 @@ const RightBoxList = () => {
                 date="3"
                 month="Mayo"
                 year="2020"
-                hour="7"
-                minutes="00"
-                am_pm="PM"
+                initial_time="7:00"
+                final_time="15:15"
                 title="Chris Serrano posted a photo on your wall."
             />
 
             <RightBoxListItem
-                date="19"
+                date="13"
                 month="Mayo"
                 year="2020"
-                hour="3"
-                minutes="00"
-                am_pm="PM"
+                initial_time="7:00"
+                final_time="15:15"
                 title="Mia Redwood commented on your last post."
             />
 
@@ -27,9 +25,8 @@ const RightBoxList = () => {
                 date="17"
                 month="Junio"
                 year="2020"
-                hour="8"
-                minutes="00"
-                am_pm="AM"
+                initial_time="7:00"
+                final_time="15:15"
                 title="Lucas McAlister just send you a message."
             />
         </ul>

@@ -19,14 +19,22 @@ const Box = () => {
                 item={4}
                 icon="hourglass-start"
                 id="initial-time"
-                placeholder="Desde"
+                type="time"
             />
 
             <BoxInputItem
                 item={5}
                 icon="hourglass-end"
                 id="final-time"
-                placeholder="Hasta"
+                type="time"
+            />
+
+
+            <BoxInputItem
+                item={5}
+                icon="calendar"
+                id="date"
+                type="date"
             />
 
             <BoxTextAreaItem
