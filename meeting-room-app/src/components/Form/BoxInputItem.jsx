@@ -11,7 +11,7 @@ const BoxInputItem = ({ item, icon, id, placeholder }) => {
             >
             </input>
         </div>
-    )
+    );
 }
 
 export default BoxInputItem;

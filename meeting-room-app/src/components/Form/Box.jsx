@@ -38,7 +38,7 @@ const Box = () => {
 
             <button id="btnReservar" className="montse">Reservar</button>
         </div>
-    )
+    );
 }
 
 export default Box;

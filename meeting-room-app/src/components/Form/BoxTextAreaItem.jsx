@@ -11,7 +11,7 @@ const BoxTextAreaItem = ({ item, icon, id, placeholder }) => {
             >
             </textarea>
         </div>
-    )
+    );
 }
 
 export default BoxTextAreaItem;
