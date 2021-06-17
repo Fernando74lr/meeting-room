@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from '../../helper/sweetAlert2';
 
 const Box = ({ onAdd }) => {
 
@@ -13,7 +14,7 @@ const Box = ({ onAdd }) => {
 
         // Check there is some task written
         if (!name || !initialTime || !finalTime || !date || !title) {
-            alert('Falta un campo');
+            toast('error', 'Hay campos vacíos, completa el formulario.');
             return;
         }
 

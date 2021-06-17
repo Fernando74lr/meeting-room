@@ -2,65 +2,44 @@ import './App.css';
 import Box from './components/Form/Box.jsx';
 import LeftBox from './components/NavBar/LeftBox.jsx';
 import RightBox from './components/Schedules/RightBox.jsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { db } from './helper/firebase';
+import { toast } from './helper/sweetAlert2';
 
 function App() {
-  const test = [
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '0 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    },
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '1 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    },
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '2 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    },
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '3 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    },
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '4 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    },
-    {
-      date: '2021-06-11',
-      initialTime: '14:14',
-      finalTime: '15:30',
-      title: '5 Serrano posted a photo on your wall.',
-      name: 'Fernando'
-    }
-  ];
+  const [schedules, setSchedules] = useState([]);
 
-  const [schedules, setSchedules] = useState(test);
-  
+  const getSchedules = async () => {
+    db.collection('schedules').onSnapshot((snapshot) => {
+      const docs = [];
+      snapshot.forEach( doc => {
+        docs.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      });
+      setSchedules(docs);
+    });
+  }
+
+  const uploadSchedule = async (data) => {
+    await db.collection('schedules').doc(Date.now()).set(data)
+  }
+
+  useEffect(() => {
+    getSchedules();
+  }, []);
+
+ 
   // Add Schedule.
   const addSchedule = (data) => {
     setSchedules([data, ...schedules]);
+    toast('success', 'Junta agregada correctamente');
   }
 
   return (
     <div className="container">
       <Box onAdd={ addSchedule } />
-      {console.log('~ schedules', schedules)}
       <LeftBox />
       <RightBox schedules={ schedules } />
     </div>
