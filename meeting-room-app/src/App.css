@@ -32,6 +32,12 @@
 	margin-top: -80px;
 }
 
+.title-no-schedules {
+	color: #ffffff;
+	text-align: center;
+	padding-top: 100%;
+}
+
 .container {
 	background: #232931;
 	width: 540px;

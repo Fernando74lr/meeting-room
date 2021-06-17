@@ -4,7 +4,9 @@ const RightBox = ({ schedules }) => {
     return (
         <div className="rightbox">
             <div className="rb-container montse">
-                <RightBoxList schedules={ schedules } />
+                {
+                    schedules.length > 0 ? <RightBoxList schedules={ schedules } /> : <h4 className="title-no-schedules">No hay juntas</h4>
+                }
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import RightBox from './components/Schedules/RightBox.jsx';
 import { useState, useEffect } from 'react';
 import { db } from './helper/firebase';
 import { toast } from './helper/sweetAlert2';
+import { bubbleSort } from './helper/orderData';
 
 function App() {
   const [schedules, setSchedules] = useState([]);
@@ -18,15 +19,16 @@ function App() {
           id: doc.id
         });
       });
-      setSchedules(docs);
+      setSchedules(bubbleSort(docs));
     });
   }
 
   const uploadSchedule = async (data) => {
-    await db.collection('schedules').doc(Date.now()).set(data)
+    await db.collection('schedules').doc(`${Date.now()}`).set(data);
   }
 
   useEffect(() => {
+    console.log('Getting data from DB...');
     getSchedules();
   }, []);
 
@@ -34,6 +36,7 @@ function App() {
   // Add Schedule.
   const addSchedule = (data) => {
     setSchedules([data, ...schedules]);
+    uploadSchedule(data);
     toast('success', 'Junta agregada correctamente');
   }
 
