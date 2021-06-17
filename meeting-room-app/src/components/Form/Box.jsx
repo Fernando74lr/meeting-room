@@ -1,5 +1,3 @@
-// import BoxInputItem from "./BoxInputItem.jsx";
-// import BoxTextAreaItem from "./BoxTextAreaItem";
 import { useState } from 'react';
 
 const Box = ({ onAdd }) => {

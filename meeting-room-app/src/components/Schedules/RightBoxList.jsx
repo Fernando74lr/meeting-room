@@ -39,6 +39,7 @@ const RightBoxList = ({ schedules }) => {
                         initial_time= { sch.initialTime }
                         final_time={ sch.finalTime }
                         title={ sch.title }
+                        name={ sch.name }
                     />
                 ))
             }
