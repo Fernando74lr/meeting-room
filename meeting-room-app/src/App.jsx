@@ -33,8 +33,6 @@ function App() {
     const dataRef = db.collection('times').where('order', '==', refId);
     const data = await dataRef.get();
     data.forEach(doc => {
-      console.log(`ID: ${doc.id}`);
-      console.log(doc.data());
       db.doc(`times/${doc.id}`).set({
         ...doc.data(),
         'available': false

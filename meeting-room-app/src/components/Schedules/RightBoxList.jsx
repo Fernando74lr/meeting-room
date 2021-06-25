@@ -36,8 +36,8 @@ const RightBoxList = ({ schedules }) => {
                         date={ sch.date.split('-')[2] }
                         month={ getMonth(sch.date.split('-')[1]) }
                         year={ sch.date.split('-')[0] }
-                        initial_time= { sch.initialTime }
-                        final_time={ sch.finalTime }
+                        initial_time= { sch.initial }
+                        final_time={ sch.final }
                         title={ sch.title }
                         name={ sch.name }
                     />

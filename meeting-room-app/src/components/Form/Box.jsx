@@ -54,11 +54,11 @@ const Box = ({ onAdd, onDisable }) => {
             */
        
 
-        setInitialTime(initialTime.split('-')[0]);
-        setFinalTime(finalTime.split('-')[0]);
+        const initial = initialTime.split('-')[0];
+        const final = finalTime.split('-')[0];
 
         // Add Schedule
-        onAdd({ name, initialTime, finalTime, date, title });
+        onAdd({ name, initial, final, date, title });
         console.log({ name, initialTime, finalTime, date, title });
 
         // Clean form
@@ -82,7 +82,14 @@ const Box = ({ onAdd, onDisable }) => {
             </div>
 
             <div className="container-4">
-                <span className="icon"><i className="fas fa-hourglass-start"></i></span>
+                <span className="icon"><i className="fas fa-calendar"></i></span>
+                <input type="date" id="date" className="montse" 
+                onChange={(e) => setDate(e.target.value)} value={date} />
+            </div>
+
+            <div className="container-5">
+
+            <span className="icon"><i className="fas fa-hourglass-start"></i></span>
                 <select name="times" className="montse" id="initial-time" onChange={(e) => setInitialTime(e.target.value)}>
                     <option key="---" value="none" defaultValue>Desde</option>
                     {
@@ -135,12 +142,6 @@ const Box = ({ onAdd, onDisable }) => {
                         })
                     }
                 </select>
-            </div>
-
-            <div className="container-5">
-                <span className="icon"><i className="fas fa-calendar"></i></span>
-                <input type="date" id="date" className="montse" 
-                onChange={(e) => setDate(e.target.value)} value={date} />
             </div>
 
             <div className="container-6">
