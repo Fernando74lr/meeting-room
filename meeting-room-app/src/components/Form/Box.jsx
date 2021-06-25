@@ -15,8 +15,8 @@ const Box = ({ onAdd, onDisable }) => {
     const [date, setDate] = useState('');
     const [title, setDescription] = useState('');
 
-    const getTimes = async () => {
-      db.collection('times').onSnapshot((snapshot) => {
+    const getTimes = async (date) => {
+      db.collection(`dates/${date}/times`).onSnapshot((snapshot) => {
         const docs = [];
         snapshot.forEach( doc => {
           docs.push({...doc.data(), id: doc.id});
@@ -27,8 +27,13 @@ const Box = ({ onAdd, onDisable }) => {
 
     useEffect(() => {
         console.log('Getting times from DB...');
-        getTimes();
-    }, []);
+        getTimes(orderDate(date));
+    }, [date]);
+
+    const orderDate = (date) => {
+        const arrayDate = date.split('-');
+        return `${Number(arrayDate[2])}-${Number(arrayDate[1])}-${Number(arrayDate[0])}`;
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -46,13 +51,8 @@ const Box = ({ onAdd, onDisable }) => {
 
         for (let order = orderInitialTime-1; order <= orderFinalTime; order++) {
             console.log('Order: ', order);
-            onDisable(order);
+            onDisable(orderDate(date), order);
         }
-
-        /*
-            db.collection('times').doc(`${day}/${month}/2021`).collection('times').set()
-            */
-       
 
         const initial = initialTime.split('-')[0];
         const final = finalTime.split('-')[0];

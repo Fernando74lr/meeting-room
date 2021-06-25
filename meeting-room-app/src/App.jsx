@@ -29,11 +29,11 @@ function App() {
     await db.collection('schedules').doc(`${Date.now()}`).set(data);
   }
 
-  const setNotAvailableSchedule = async (refId) => {
-    const dataRef = db.collection('times').where('order', '==', refId);
+  const setNotAvailableSchedule = async (date, id) => {
+    const dataRef = db.collection(`dates/${date}/times`).where('order', '==', id);
     const data = await dataRef.get();
     data.forEach(doc => {
-      db.doc(`times/${doc.id}`).set({
+      db.doc(`dates/${date}/times/${doc.id}`).set({
         ...doc.data(),
         'available': false
       });
@@ -43,8 +43,6 @@ function App() {
   useEffect(() => {
     console.log('Getting data from DB...');
     getSchedules();
-    // setNotAvailableSchedule(1);
-    // setNewDates();
   }, []);
 
  
