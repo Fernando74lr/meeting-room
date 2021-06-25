@@ -182,23 +182,25 @@ ul.rb li .timestamp {
 
 
 /* Initial time input */
-.container-4 input#initial-time {
-	width: 150px;
+/* .container-4 input#initial-time { */
+.container-4 select#initial-time {
+	width: 165px;
 	height: 30px;
 	background: #fbfbfb;
 	border: none;
-	font-size: 10pt;
+	font-size: 11pt;
 	color: #232931;
     font-weight: bold;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	margin: 5em 0 0 6.5em;
+	margin: 5em 0 0 6em;
+	padding-left: -20px!important;
 	box-shadow: 3px 3px 15px rgba(119, 119, 119, 0.5);
 }
 
 .container-4 .icon {
-	margin: 4.3em 3em 0 16.7em;
+	margin: 4.7em 3em 0 16.7em;
 	position: absolute;
 	width: 150px;
 	height: 30px;
@@ -207,23 +209,25 @@ ul.rb li .timestamp {
 }
 
 /* Final time input */
-.container-5 input#final-time {
-	width: 150px;
+/* .container-5 input#final-time { */
+.container-5 select#final-time {
+	width: 165px;
 	height: 30px;
 	background: #fbfbfb;
 	border: none;
-	font-size: 10pt;
+	font-size: 11pt;
 	color: #232931;
     font-weight: bold;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	margin: 2em 0 0 6.5em;
+	margin: 2em 0 0 6em;
+	padding-left: -20px!important;
 	box-shadow: 3px 3px 15px rgba(119, 119, 119, 0.5);
 }
 
 .container-5 .icon {
-	margin: 1.9em 3em 0 16.7em;
+	margin: 2em 3em 0 16.7em;
 	position: absolute;
 	width: 150px;
 	height: 30px;
@@ -231,6 +235,9 @@ ul.rb li .timestamp {
 	color: #ffffff
 }
 
+select {
+	text-indent: 10px;
+  }
 
 /* Date input */
 .container-5 input#date {
@@ -295,6 +302,10 @@ input {
 
 textarea {
 	padding-top: 12px;
+	resize: none;
+	font-family: 'Montserrat', sans-serif;
+	color: #232931;
+	font-size: 14px;
 }
 
 .montse {
@@ -307,4 +318,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     background: none;
+}
+
+input[type="time"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+input:focus {
+    outline: none;
 }

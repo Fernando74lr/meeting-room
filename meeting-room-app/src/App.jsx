@@ -7,6 +7,8 @@ import { db } from './helper/firebase';
 import { toast } from './helper/sweetAlert2';
 import { bubbleSort } from './helper/orderData';
 
+// TODO: check the selected hour is valid and do not cross with another schedule.
+
 function App() {
   const [schedules, setSchedules] = useState([]);
 
@@ -19,7 +21,7 @@ function App() {
           id: doc.id
         });
       });
-      setSchedules(bubbleSort(docs));
+      setSchedules(bubbleSort(docs).reverse());
     });
   }
 
@@ -27,9 +29,24 @@ function App() {
     await db.collection('schedules').doc(`${Date.now()}`).set(data);
   }
 
+  const setNotAvailableSchedule = async (refId) => {
+    const dataRef = db.collection('times').where('order', '==', refId);
+    const data = await dataRef.get();
+    data.forEach(doc => {
+      console.log(`ID: ${doc.id}`);
+      console.log(doc.data());
+      db.doc(`times/${doc.id}`).set({
+        ...doc.data(),
+        'available': false
+      });
+    });
+  }
+
   useEffect(() => {
     console.log('Getting data from DB...');
     getSchedules();
+    // setNotAvailableSchedule(1);
+    // setNewDates();
   }, []);
 
  
@@ -42,7 +59,7 @@ function App() {
 
   return (
     <div className="container">
-      <Box onAdd={ addSchedule } />
+      <Box onAdd={ addSchedule } onDisable={ setNotAvailableSchedule } />
       <LeftBox />
       <RightBox schedules={ schedules } />
     </div>
