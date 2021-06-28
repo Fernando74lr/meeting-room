@@ -7,11 +7,9 @@ import { useState, useEffect } from 'react';
 import { db } from './helper/firebase';
 import { toast } from './helper/sweetAlert2';
 import { bubbleSort } from './helper/orderData';
+import { CREDENTIALS } from './credentials';
 
 function App() {
-
-  const CLIENT_ID = "167105045097-pm2ku6m83ckujs84jij96som2o76u9ju.apps.googleusercontent.com";
-  const API_KEY = "AIzaSyDv_dBsfvmRnfKWMy88bJoBxI46V2M4Q8U";
   const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
   const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
@@ -20,8 +18,8 @@ function App() {
       console.log('loaded client')
 
       gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
+        apiKey: CREDENTIALS.API_KEY,
+        clientId: CREDENTIALS.CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES,
       })
