@@ -6,7 +6,7 @@ const RightBoxListItem = ({ date, month, year, initial_time, final_time, title, 
                 <div className="timestamp">
                     { date } de { month } { year } {"\n"}
                     { initial_time } {" - "} { final_time } {"\n"}
-                    { name }
+                    {/* { name } */}
                 </div>
                 <div className="item-title">{ title }</div>
             </li>

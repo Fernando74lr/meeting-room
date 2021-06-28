@@ -3,7 +3,7 @@ import { db } from '../../helper/firebase';
 import { bubbleSortTime } from '../../helper/orderData';
 import { toast } from '../../helper/sweetAlert2';
 
-const Box = ({ onAdd, onDisable }) => {
+const Box = ({ onAdd, onDisable, onLoadEvent }) => {
 
     // Times
     const [times, setTimes] = useState([]);
@@ -35,10 +35,32 @@ const Box = ({ onAdd, onDisable }) => {
         return `${Number(arrayDate[2])}-${Number(arrayDate[1])}-${Number(arrayDate[0])}`;
     }
 
+    const prepareEvent = (data) => {
+        return {
+            'summary': data.newTitle,
+            'description': data.newDescription,
+            'start': {
+                'dateTime': new Date(`${data.date} ${data.initial} GMT-5`),
+                'timeZone': 'Mexico/General'
+              },
+              'end': {
+                'dateTime':  new Date(`${data.date} ${data.final} GMT-5`),
+                'timeZone': 'Mexico/General'
+            },
+            'attendees': data.emails,
+            'reminders': {
+              'useDefault': false,
+              'overrides': [
+                {'method': 'popup', 'minutes': 10}
+              ]
+            }
+        };
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
 
-        console.table([name, initialTime, finalTime, date, title]);
+        // console.table([name, initialTime, finalTime, date, title]);
 
         // Check there is some task written
         if (!name || !initialTime || !finalTime || !date || !title) {
@@ -50,16 +72,29 @@ const Box = ({ onAdd, onDisable }) => {
         const orderFinalTime = finalTime.split('-')[1];
 
         for (let order = orderInitialTime-1; order <= orderFinalTime; order++) {
-            console.log('Order: ', order);
+            // console.log('Order: ', order);
             onDisable(orderDate(date), order);
         }
 
+        // Prepare emails, title and description
+        const emailsJoined = name.split(',');
+        const emails = [];
+        emailsJoined.forEach(email => emails.push({'email': email.trim()}));
+        const newTitle = title.split('-')[0].trim();
+        const newDescription = title.split('-')[1].trim();
+
+        // Prepare initial and final times
         const initial = initialTime.split('-')[0];
         const final = finalTime.split('-')[0];
 
         // Add Schedule
-        onAdd({ name, initial, final, date, title });
-        console.log({ name, initialTime, finalTime, date, title });
+        onAdd({ emails, initial, final, date, newTitle, newDescription });
+
+        // Prepare and upload event to Google Calendar
+        console.log({ emails, initial, final, date, newTitle, newDescription });
+        const event = prepareEvent({ emails, initial, final, date, newTitle, newDescription });
+        console.log(event);
+        onLoadEvent(event);
 
         // Clean form
         setName('');
@@ -77,7 +112,7 @@ const Box = ({ onAdd, onDisable }) => {
 
             <div className="container-3">
                 <span className="icon"><i className="fa fa-user"></i></span>
-                <input type="text" id="name" autoComplete="off" className="montse" placeholder="Nombre" 
+                <input type="text" id="name" autoComplete="off" className="montse" placeholder="Correos" 
                 onChange={(e) => setName(e.target.value)} value={name} />
             </div>
 
@@ -146,8 +181,13 @@ const Box = ({ onAdd, onDisable }) => {
 
             <div className="container-6">
                 <span className="icon"><i className="fas fa-align-left"></i></span>
-                <textarea name="d" id="description2" cols="30" rows="5" placeholder="Descripción"
-                onChange={(e) => setDescription(e.target.value)} value={title} ></textarea>
+                <textarea 
+                    id="description2"
+                    cols="30"
+                    rows="5"
+                    placeholder="Título - Descripción"
+                    onChange={(e) => setDescription(e.target.value)} value={title} ></textarea>
+                    
             </div>
 
             <button id="btnReservar" className="montse">Reservar</button>

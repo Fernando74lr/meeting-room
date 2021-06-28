@@ -1,3 +1,4 @@
+/* global gapi */
 import './App.css';
 import Box from './components/Form/Box.jsx';
 import LeftBox from './components/NavBar/LeftBox.jsx';
@@ -7,9 +8,41 @@ import { db } from './helper/firebase';
 import { toast } from './helper/sweetAlert2';
 import { bubbleSort } from './helper/orderData';
 
-// TODO: check the selected hour is valid and do not cross with another schedule.
-
 function App() {
+
+  const CLIENT_ID = "167105045097-pm2ku6m83ckujs84jij96som2o76u9ju.apps.googleusercontent.com";
+  const API_KEY = "AIzaSyDv_dBsfvmRnfKWMy88bJoBxI46V2M4Q8U";
+  const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+  const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+
+  const loadEvent = (event) => {
+    gapi.load('client:auth2', () => {
+      console.log('loaded client')
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      })
+
+      gapi.client.load('calendar', 'v3', () => console.log('bam!'))
+
+      gapi.auth2.getAuthInstance().signIn()
+      .then(() => {
+
+        var request = gapi.client.calendar.events.insert({
+          'calendarId': 'primary',
+          'resource': event,
+        });
+
+        request.execute(event => {
+          console.log(event)
+          window.open(event.htmlLink)
+        });
+      });
+    });
+  }
   const [schedules, setSchedules] = useState([]);
 
   const getSchedules = async () => {
@@ -55,7 +88,7 @@ function App() {
 
   return (
     <div className="container">
-      <Box onAdd={ addSchedule } onDisable={ setNotAvailableSchedule } />
+      <Box onAdd={ addSchedule } onDisable={ setNotAvailableSchedule } onLoadEvent={ loadEvent }/>
       <LeftBox />
       <RightBox schedules={ schedules } />
     </div>
